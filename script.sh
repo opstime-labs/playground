@@ -1,3 +1,3 @@
 #! /usr/bin/env bash
 
-echo "This is our entry script"
+echo "This is our official entry script"
