@@ -1,0 +1,65 @@
+# ==========================================
+# DevOps & Infrastructure
+# ==========================================
+# Terraform local state and overrides
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfvars.json
+.terraform.lock.hcl
+
+# Ansible retry files
+*.retry
+
+# Vault or encryption keys
+*.pem
+*.key
+*.pub
+secret.json
+
+# ==========================================
+# Containers & Virtualization
+# ==========================================
+# Vagrant local state
+.vagrant/
+
+# Local Docker volumes / database files
+.docker/
+data/
+db_data/
+
+# ==========================================
+# Linux System Files
+# ==========================================
+# Ubuntu desktop / system artifacts
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ==========================================
+# Python / Automation Scripts
+# ==========================================
+# Python virtual environments (commonly used in DevOps automation)
+.venv/
+venv/
+ENV/
+pyvenv.cfg
+__pycache__/
+*.pyc
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
+.env
+.env.*
+!.env.example
+
+# ==========================================
+# Other Files
+# ==========================================
+*.txt
+*.log
+
