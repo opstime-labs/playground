@@ -59,7 +59,14 @@ authForm.addEventListener('submit', async (e) => {
     }
 
     if (isLoginMode) {
-      // Success: Route to dashboard view
+      // 1. Save the token and email locally in the browser
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('userEmail', data.user.email);
+
+      // 2. Fetch secret profile data from the backend
+      await getSecretProfileData();
+
+      // 3. Route to dashboard view
       userEmailDisplay.textContent = data.user.email;
       authScreen.classList.add('hidden');
       dashboardScreen.classList.remove('hidden');
@@ -78,8 +85,45 @@ authForm.addEventListener('submit', async (e) => {
 
 // Handle Logout action
 logoutBtn.addEventListener('click', () => {
+  localStorage.clear(); // Deletes token and email from browser storage
   dashboardScreen.classList.add('hidden');
   authScreen.classList.remove('hidden');
   message.className = 'error';
   message.textContent = '';
 });
+
+// Runs automatically whenever the page loads or refreshes
+window.addEventListener('DOMContentLoaded', async () => {
+  const token = localStorage.getItem('token');
+  const savedEmail = localStorage.getItem('userEmail');
+
+  // If a valid token exists, bypass login and jump straight to the dashboard
+  if (token && savedEmail) {
+    userEmailDisplay.textContent = savedEmail;
+    authScreen.classList.add('hidden');
+    dashboardScreen.classList.remove('hidden');
+
+    // INVOKE THE FUNCTION HERE to restore their private profile data
+    await getSecretProfileData();
+  }
+});
+
+async function getSecretProfileData() {
+  const token = localStorage.getItem('token');
+
+  const response = await fetch('http://localhost:3000/api/user/profile', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` // Presenting the security badge
+    }
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    console.error("Unauthorized access!", data.error);
+  } else {
+    console.log("Success! Here is the private data:", data);
+  }
+}
+

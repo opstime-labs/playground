@@ -8,6 +8,7 @@ const cors = require('cors');
 const path = require('path');
 
 const authController = require('./controllers/authController');
+const { protectRoute } = require('./middlewares/authMiddleware'); // Import middleware
 
 const app = express();
 app.use(cors()); // Allows browser fetch requests
@@ -21,9 +22,16 @@ app.use(express.json());
 // Serve static frontend files from a folder named 'web' in the root directory
 app.use(express.static(path.join(__dirname, '../web')));
 
-// API Routes
+// Public API Routes
 app.post('/api/auth/register', authController.register);
 app.post('/api/auth/login', authController.login);
+
+// Private/Protected Route (Guarded by protectRoute)
+app.get('/api/user/profile', protectRoute, (req, res) => {
+  // req.user was populated by our middleware if verification succeeded
+  res.status(200).json({ message: 'Secret data accessed!', user: req.user });
+});
+
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
