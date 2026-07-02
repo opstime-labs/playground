@@ -62,4 +62,6 @@ __pycache__/
 # ==========================================
 *.txt
 *.log
+node_modules/
+database.sqlite
 
