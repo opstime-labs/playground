@@ -3,7 +3,7 @@ const userRepository = require('../repositories/userRepository');
 const bcrypt = require('bcryptjs');
 
 const jwt = require('jsonwebtoken'); // Import JWT
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'local_development_fallback_key';
 
 const registerUser = async (email, password) => {
   const existingUser = await userRepository.findByEmail(email);

@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  auth-app:
+    # 1. Tell Compose to build the image using the local Dockerfile
+    build: .
+
+    # 2. Replaces the '--name auth-container' terminal argument
+    container_name: auth-container
+
+    # 3. Replaces the '-p 3000:3000' terminal argument
+    ports:
+      - "3000:3000"
+
+    # 4. Replaces the '--env-file .env' terminal argument
+    env_file:
+      - .env
+
+    # 5. Replaces the '-v $(pwd)/database.sqlite...' volume argument
+    volumes:
+      - ./database.sqlite:/usr/src/app/database.sqlite
+
+    # 6. Automatically restarts your server if it encounters an unhandled crash
+    restart: always
+
