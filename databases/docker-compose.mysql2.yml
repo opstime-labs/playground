@@ -12,7 +12,8 @@ services:
       MYSQL_USER: my_app_user                   # Custom non-root username
       MYSQL_PASSWORD: user_secure_password      # Custom non-root password
     volumes:
-      - mysql_data:/var/lib/mysql # MySQL specific internal path
+      - ./mysql_data:/var/lib/mysql # MySQL specific internal path
+restart: always      
+# debugging purpose: enable general query logging to a file inside the container
+command: --general-log=1 --general-log-file=/var/lib/mysql/query.log
 
-volumes:
-  mysql_data: # Defines the persistent volume on your Ubuntu host
