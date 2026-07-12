@@ -1,0 +1,17 @@
+services
+  auth-node-app
+    # 1. Tell Compose to build the image using the local Dockerfile
+    build: .
+    # 2 . Give name to your container
+    container_name: auth-node-app-container
+    # 3. Map the port
+    ports:
+      -"3000:3000" # server port:inside container port
+    env_file:
+      -.env
+    volumes: #Bind Mount : Mirrors db file from inside container to current root dir on the server to persist db data
+      -./database.sqlite:/usr/src/app/database.sqlite
+
+    # 6. Automatically restarts your server if it encounters an unhandled crash
+    restart: always
+

@@ -1,7 +1,7 @@
 // public/index.js
 // This file handles the front-end logic for the authentication system inside the browser, including registration and login functionalities.
 
-const API_URL = 'http://localhost:3000/api/auth';
+const API_URL = 'http://localhost:3000/api/auth'; // don't hardcode this in production; use environment variables or a config file instead
 
 // DOM elements
 const authScreen = document.getElementById('authScreen');
