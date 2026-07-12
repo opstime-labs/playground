@@ -64,4 +64,5 @@ __pycache__/
 *.log
 node_modules/
 database.sqlite
+*.db
 
