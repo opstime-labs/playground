@@ -1,7 +1,17 @@
-// src/services/authService.js
-//const userRepository = require('../repositories/userRepositorydb');
-const userRepository = require('../repositories/userRepositorymysqldb');
+// src/repositories/userRepositorymysqldb.js
+const dbType = process.env.DB_TYPE || 'sqlite'; // Defaults to sqlite if not set
 const bcrypt = require('bcryptjs');
+
+let userRepository;
+if (dbType === 'mysql') {
+  console.log('📦 App Architecture: Using MySQL Repository Layer');
+  userRepository = require('../repositories/userRepositorymysqldb');
+} else {
+  console.log('📦 App Architecture: Using SQLite Repository Layer');
+  userRepository = require('../repositories/userRepositorydb'); // Your original SQLite file
+}
+
+
 
 const registerUser = async (email, password) => {
   const existingUser = await userRepository.findByEmail(email);
